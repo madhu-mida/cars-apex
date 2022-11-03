@@ -11,7 +11,8 @@ const carSchema = new Schema({
     category: String,
     mileage: Number,
     price: Number,
-    carId: String
+    carId: String,
+    img: String
 })
 
 const Car = model("Car", carSchema)
