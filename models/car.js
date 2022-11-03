@@ -11,7 +11,10 @@ const carSchema = new Schema({
     category: String,
     mileage: Number,
     price: Number,
-    carId: String,
+    carId: {
+        type: String,
+        unique: true
+    },
     img: String
 })
 
