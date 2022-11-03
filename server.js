@@ -10,7 +10,7 @@ const Car = require('./models/car')
 
 // MIDDLEWARES
 app.use(cors());
-app.use(morgan("dev"));
+app.use(morgan(':method :url :status :http-version :response-time '));
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
@@ -37,8 +37,10 @@ app.get("/cars/:id", async (req, res) => {
 
 app.post("/cars", async (req, res) => {
     try {
+        console.log("Ind")
         let response = await Car.create(req.body)
         res.json(response)
+        console.log(response)
     } catch (error) {
         res.status(400).json(error)
     }
@@ -46,7 +48,7 @@ app.post("/cars", async (req, res) => {
 
 app.delete("/cars/:id", async (req, res) => {
     try {
-        res.json(await Car.findByIdAndDelete(req.params.id))
+        res.json(await Car.findOneAndDelete({ carId: req.params.id }))
     } catch (error) {
         res.status(400).json(error)
     }
@@ -54,8 +56,8 @@ app.delete("/cars/:id", async (req, res) => {
 
 app.put("/cars/:id", async (req, res) => {
     try {
-        res.json(await Car.findByIdAndUpdate(
-            req.params.id,
+        res.json(await Car.findOneAndUpdate(
+            { carId: req.params.id },
             req.body,
             { new: true }
         ))
